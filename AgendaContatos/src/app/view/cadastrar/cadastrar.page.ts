@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import Contato from 'src/app/model//entities/Contato';
-import { ContatoService } from 'src/app/model/services/contato.service';
+import { FirebaseService } from 'src/app/model/services/firebase.service';
 
 @Component({
   selector: 'app-cadastrar',
@@ -15,7 +15,8 @@ export class CadastrarPage implements OnInit {
   email: string;
   genero: number;
 
-  constructor(private alertController: AlertController, private contatoService: ContatoService, private router: Router) {
+  constructor(private alertController: AlertController, private router: Router,
+     private firebaseService: FirebaseService) {
 
    }
 
@@ -31,8 +32,12 @@ export class CadastrarPage implements OnInit {
         c.genero = 0;
       }
       
-    this.contatoService.cadastrar(c);
-    this.router.navigate(['/home']);
+    this.firebaseService.cadastrar(c).then(()=>{this.router.navigate(['/home'])
+    })
+    .catch((error)=>{console.log(error);
+      this.presentAlert('Error','Erro ao cadastrar no Firebase.');
+    });
+    
     }else{
     this.presentAlert('Alert','Your computer has vairus');
     this.nome ="";

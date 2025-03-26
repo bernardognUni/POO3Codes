@@ -7,17 +7,11 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-list-header>
-      Meus Manos:
-    </ion-list-header>
-    <ion-item *ngFor="let contato of contatos">
-      <ion-label>{{contato.nome}}</ion-label>
-      <ion-label>{{contato.telefone}}</ion-label>
-      <ion-label>{{contato.email}}</ion-label>
-      <ion-label>{{contato.genero}}</ion-label>
+  <ion-list *ngFor="let contato of contatos; let i = index">
+    <ion-item (click)="editar(i)">
+    <ion-label>{{contato.nome}}</ion-label>
     </ion-item>
-  </ion-list>
+    </ion-list>
 
   <ion-fab vertical ="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="irParaCadastrar()">
